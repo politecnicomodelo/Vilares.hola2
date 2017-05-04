@@ -1,6 +1,6 @@
 class Persona (object):
-    Nombre=""
-    Apellido=""
+    Nombre=None
+    Apellido=None
 
     def setNombre(self, nombre):
         self.Nombre=nombre

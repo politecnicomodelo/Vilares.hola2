@@ -1,4 +1,4 @@
 class Plato (object):
-    Nombre=""
-    Precio=0
+    Nombre=None
+    Precio=None
 

@@ -1,3 +1,3 @@
 from Persona import Persona
 class Alumno(Persona):
-    Division=""
+    Division=None

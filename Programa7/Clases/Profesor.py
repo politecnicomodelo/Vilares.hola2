@@ -1,6 +1,6 @@
 from Persona import Persona
 class Profesor(Persona):
-    Descuento=""
+    Descuento=None
 
     def setDescuento(self,descuento):
         self.Descuento=descuento
