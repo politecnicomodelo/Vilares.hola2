@@ -1,7 +1,7 @@
-from Profesor import Profesor
-from Platillo import Plato
-from Alumno import Alumno
-from Pedido import Pedido
+from Clases.Profesor import Profesor
+from Clases.Platillo import Plato
+from Clases.Alumno import Alumno
+from Clases.Pedido import Pedido
 from datetime import date
 
 ListaPersonas=[]
@@ -64,7 +64,7 @@ def addPedido (idpedido):
 def modAlumno ():
     while(True):
         dni = input("Dni del alumno a modificar: ")
-        for item in ListaPersonas
+        for item in ListaPersonas:
             if item.Dni == dni:
                 if type(item) is Alumno:
                     print("Alumno encontrado, modifique")
@@ -121,7 +121,7 @@ def modPedido():
 def eliminarAlumno():
     while(True):
         dni = input("Dni del alumno a eliminar: ")
-        for item in ListaPersonas
+        for item in ListaPersonas:
             if item.Dni == dni:
                 if type(item) is Alumno:
                     ListaPersonas.remove(item)
@@ -131,7 +131,7 @@ def eliminarAlumno():
 def eliminarProfesor():
     while(True):
         dni = input("Dni del profesor a eliminar: ")
-        for item in ListaPersonas
+        for item in ListaPersonas:
             if item.Dni == dni:
                 if type(item) is Profesor:
                     ListaPersonas.remove(item)
@@ -165,6 +165,51 @@ def listadoPlatos():
         if item.FechaE == fechaingr:
             print (Pedido.Plato.Nombre + " " + Pedido.Persona.Nombre + " " + Pedido.Persona.Apellido + " " +
                    str(Pedido.Plato.Precio*Pedido.Plato.setDescuento))
+
+
+while(True):
+
+    print("1 - Agregar Alumno")
+    print("2 - Agregar Profesor")
+    print("3 - Agregar Plato")
+    print("4 - Agregar Pedido")
+    print("5 - Eliminar Alumno")
+    print("6 - Eliminar Profesor")
+    print("7 - Eliminar Plato")
+    print("8 - Eliminar Pedido")
+    print("9 - Mostrar Listado de Platos")
+    print("A - Modificar Alumno")
+    print("B - Modificar Profesor")
+    print("C - Modificar Plato")
+    print("D - Modificar Pedido")
+
+    a=input()
+    if int(a) == 1:
+        addAlumno()
+    if int(a) == 2:
+        addProfesor()
+    if int(a) == 3:
+        addPlatillo()
+    if int(a) == 4:
+        addPedido(idpedido)
+    if int(a) == 5:
+        eliminarAlumno()
+    if int(a) == 6:
+        eliminarProfesor()
+    if int(a) == 7:
+        eliminarPlatillo()
+    if int(a) == 8:
+        eliminarPedido()
+    if int(a) == 9:
+        listadoPlatos()
+    if a == "A":
+        modAlumno()
+    if a == "B":
+        modProfesor()
+    if a == "C":
+        modPlatillo()
+    if a == "D":
+        modPedido()
 
 
 
