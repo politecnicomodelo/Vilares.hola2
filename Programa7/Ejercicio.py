@@ -14,7 +14,7 @@ def addAlumno ():
     apellido = input("Apellido: ")
     dni = input("Dni: ")
     division=input("Division: ")
-    alumno1=Alumno(nombre, apellido, dni, division)
+    alumno1=Alumno(nombre, apellido, int(dni), division)
     ListaPersonas.append(alumno1)
 
 def addProfesor ():
@@ -22,14 +22,14 @@ def addProfesor ():
     apellido = input("Apellido: ")
     dni = input("Dni: ")
     descuento=input("Descuento: ")
-    profesor1=Profesor(nombre, apellido, dni, descuento)
+    profesor1=Profesor(nombre, apellido, int(dni), descuento)
     ListaPersonas.append(profesor1)
 
 def addPlatillo ():
     nombre = input("Nombre: ")
     precio = input("Precio: ")
-    platillo1=Plato(nombre, precio)
-    ListaPLatos.append(platillo1)
+    platillo1=Plato(nombre, int(precio))
+    ListaPlatos.append(platillo1)
 
 def addPedido (idpedido):
     plato=None
@@ -38,24 +38,34 @@ def addPedido (idpedido):
     anio = input("Anio: ")
     mes = input("Mes: ")
     dia = input("Dia: ")
-    FechaC=date(anio, mes, dia)
+    FechaC=date(int(anio), int(mes), int(dia))
     while(True):
-        plato = input("Plato: ")
+        nombre = input("Plato: ")
+        A=None
         for item in ListaPlatos:
-            if item.Plato == plato:
+            if item.Nombre == nombre:
+                plato=item
+                A=1
                 break
+        if A==1:
+            break
         print("Plato inexistente, ingrese de nuevo")
     while(True):
-        persona = input("Persona (dni): ")
+        dni = input("Persona (dni): ")
+        A=None
         for item in ListaPersonas:
-            if item.Dni == persona:
+            if item.Dni == int(dni):
+                persona=item
+                A=1
                 break
+        if A==1:
+            break
         print("Persona inexistente, ingrese de nuevo")
     print("Ingrese fecha de entrega")
     anio = input("Anio: ")
     mes = input("Mes: ")
     dia = input("Dia: ")
-    FechaE=date(anio, mes, dia)
+    FechaE=date(int(anio), int(mes), int(dia))
     entregado=input("Ya se entrego?: ")
     idpedido += 1
     pedido1=Pedido(FechaC, plato, persona, FechaE, entregado, idpedido)
@@ -64,6 +74,7 @@ def addPedido (idpedido):
 def modAlumno ():
     while(True):
         dni = input("Dni del alumno a modificar: ")
+        A=None
         for item in ListaPersonas:
             if item.Dni == dni:
                 if type(item) is Alumno:
@@ -72,12 +83,16 @@ def modAlumno ():
                     item.Apellido = input("Apellido: ")
                     item.Dni = input("Dni: ")
                     item.Division = input("Division: ")
-                    return
+                    A=1
+                    break
+        if A==1:
+            break
         print("Dni inexistente, ingrese de nuevo")
 
 def modProfesor():
     while(True):
         dni = input("Dni del profesor a modificar: ")
+        A=None
         for item in ListaPersonas:
             if item.Dni == dni:
                 if type(item) is Profesor:
@@ -86,7 +101,10 @@ def modProfesor():
                     item.Apellido = input("Apellido: ")
                     item.Dni = input("Dni: ")
                     item.Descuento = input("Descuento: ")
-                    return
+                    A=1
+                    break
+        if A==1:
+            break
         print("Dni inexistente, ingrese de nuevo")
 
 def modPlatillo():
@@ -111,60 +129,81 @@ def modPlatillo():
 def modPedido():
     while(True):
         idpedidox = input("Id del pedido a modificar: ")
+        A=None
         for item in ListaPedidos:
             if item.idpedido == idpedidox:
                 item.Entregado=input("Se entrego?: ")
-                return
+                A=1
+                break
+        if A==1:
+            break
         print("Pedido inexistente, ingrese de nuevo")
 
 
 def eliminarAlumno():
     while(True):
         dni = input("Dni del alumno a eliminar: ")
+        A=None
         for item in ListaPersonas:
             if item.Dni == dni:
                 if type(item) is Alumno:
                     ListaPersonas.remove(item)
-                    return
+                    A=1
+                    break
+        if A==1:
+            break
         print("Dni inexistente, ingrese de nuevo")
 
 def eliminarProfesor():
     while(True):
         dni = input("Dni del profesor a eliminar: ")
+        A=None
         for item in ListaPersonas:
             if item.Dni == dni:
                 if type(item) is Profesor:
                     ListaPersonas.remove(item)
-                    return
+                    A=1
+                    break
+        if A==1:
+            break
         print("Dni inexistente, ingrese de nuevo")
 
 def eliminarPlatillo():
     while(True):
         nombre = input("Nombre del plato a eliminar: ")
+        A=None
         for item in ListaPlatos:
             if item.Nombre == nombre:
                 ListaPlatos.remove(item)
-                return
+                A=1
+                break
+        if A==1:
+            break
         print("Plato inexistente, ingrese de nuevo")
 
 def eliminarPedido():
     while(True):
         idpedidox = input("Id del pedido a modificar: ")
+        A=None
         for item in ListaPedidos:
             if item.idpedido == idpedidox:
                 ListaPedidos.remove(item)
-                return
+                A=1
+                break
+        if A==1:
+            break
         print("Pedido inexistente, ingrese de nuevo")
 
 def listadoPlatos():
     anio=input("Ingrese anio: ")
     mes=input("Mes: ")
     dia=input("Dia: ")
-    fechaingr=date(anio, mes, dia)
-    for item in ListaPlatos:
+    fechaingr=date(int(anio), int(mes), int(dia))
+    for item in ListaPedidos:
         if item.FechaE == fechaingr:
-            print (Pedido.Plato.Nombre + " " + Pedido.Persona.Nombre + " " + Pedido.Persona.Apellido + " " +
-                   str(Pedido.Plato.Precio*Pedido.Plato.setDescuento))
+            print(item.Plato.Nombre + " " + item.Persona.Nombre + " " + item.Persona.Apellido + " " +
+                   str(item.setDescuento()))
+
 
 
 while(True):
@@ -178,10 +217,10 @@ while(True):
     print("7 - Eliminar Plato")
     print("8 - Eliminar Pedido")
     print("9 - Mostrar Listado de Platos")
-    print("A - Modificar Alumno")
-    print("B - Modificar Profesor")
-    print("C - Modificar Plato")
-    print("D - Modificar Pedido")
+    print("10 - Modificar Alumno")
+    print("11 - Modificar Profesor")
+    print("12 - Modificar Plato")
+    print("13 - Modificar Pedido")
 
     a=input()
     if int(a) == 1:
@@ -202,13 +241,13 @@ while(True):
         eliminarPedido()
     if int(a) == 9:
         listadoPlatos()
-    if a == "A":
+    if int(a) == 10:
         modAlumno()
-    if a == "B":
+    if int(a) == 11:
         modProfesor()
-    if a == "C":
+    if int(a) == 12:
         modPlatillo()
-    if a == "D":
+    if int(a) == 13:
         modPedido()
 
 
