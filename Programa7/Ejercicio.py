@@ -22,7 +22,7 @@ def addProfesor ():
     apellido = input("Apellido: ")
     dni = input("Dni: ")
     descuento=input("Descuento: ")
-    profesor1=Profesor(nombre, apellido, int(dni), descuento)
+    profesor1=Profesor(nombre, apellido, int(dni), int(descuento))
     ListaPersonas.append(profesor1)
 
 def addPlatillo ():
@@ -145,7 +145,7 @@ def eliminarAlumno():
         dni = input("Dni del alumno a eliminar: ")
         A=None
         for item in ListaPersonas:
-            if item.Dni == dni:
+            if item.Dni == int(dni):
                 if type(item) is Alumno:
                     ListaPersonas.remove(item)
                     A=1
@@ -159,7 +159,7 @@ def eliminarProfesor():
         dni = input("Dni del profesor a eliminar: ")
         A=None
         for item in ListaPersonas:
-            if item.Dni == dni:
+            if item.Dni == int(dni):
                 if type(item) is Profesor:
                     ListaPersonas.remove(item)
                     A=1
@@ -183,10 +183,10 @@ def eliminarPlatillo():
 
 def eliminarPedido():
     while(True):
-        idpedidox = input("Id del pedido a modificar: ")
+        idpedidox = input("Id del pedido a eliminar: ")
         A=None
         for item in ListaPedidos:
-            if item.idpedido == idpedidox:
+            if item.idpedido == int(idpedidox):
                 ListaPedidos.remove(item)
                 A=1
                 break
@@ -204,23 +204,109 @@ def listadoPlatos():
             print(item.Plato.Nombre + " " + item.Persona.Nombre + " " + item.Persona.Apellido + " " +
                    str(item.setDescuento()))
 
+def textoAlumnos():
+    f=open("ArchivoAlumnos.txt" ,"w")
+    for item in ListaPersonas:
+        if type(item) is Alumno:
+            f.write(item.Nombre + " " + item.Apellido + " " + str(item.Dni) + " " + item.Division + '\n')
+    f.close()
+
+def textoProfesor():
+    f=open("ArchivoProfesor.txt" ,"w")
+    for item in ListaPersonas:
+        if type(item) is Profesor:
+            f.write(item.Nombre + " " + item.Apellido + " " + str(item.Dni) + " " + str(item.Descuento) + '\n')
+    f.close()
+
+def textoPlatos():
+    f=open("ArchivoPlatos.txt" ,"w")
+    for item in ListaPlatos:
+        f.write(item.Nombre + " " + str(item.Precio) + '\n')
+    f.close()
+
+def textoPedidos():
+    f=open("ArchivoPedidos.txt" ,"w")
+    for item in ListaPedidos:
+        f.write(str(item.idpedido) + " " + str(item.FechaC) + " " + str(item.FechaE) + " " + item.Entregado + " " + str(item.Persona.Dni)
+                + " " + item.Plato.Nombre + '\n')
+    f.close()
+
+def cargarAlumnos():
+    Aux=None
+    p=open("ArchivoAlumnos.txt" ,"r")
+    for line in p:
+        if line == "":
+            break
+        Aux=line.split(" ")
+        AlumnoAux=Alumno()
+        AlumnoAux.setNombre(Aux[0])
+        AlumnoAux.setApellido(Aux[1])
+        AlumnoAux.setDni(int(Aux[2]))
+        AlumnoAux.setDivision(Aux[3])
+        ListaPersonas.append(AlumnoAux)
+    p.close()
+
+def cargarProfesor():
+    Aux=None
+    p=open("ArchivoProfesor.txt" ,"r")
+    for line in p:
+        if line == "":
+            break
+        Aux=line.split(" ")
+        ProfesorAux=Profesor()
+        ProfesorAux.setNombre(Aux[0])
+        ProfesorAux.setApellido(Aux[1])
+        ProfesorAux.setDni(int(Aux[2]))
+        ProfesorAux.setDescuento(int(Aux[3]))
+        ListaPersonas.append(ProfesorAux)
+    p.close()
+
+def cargarPlatos():
+    Aux=None
+    p=open("ArchivoPlatos.txt" ,"r")
+    for line in p:
+        if line == "":
+            break
+        Aux=line.split(" ")
+        PlatoAux=Plato()
+        PlatoAux.setNombre(Aux[0])
+        PlatoAux.setPrecio(int(Aux[1]))
+        ListaPlatos.append(PlatoAux)
+    p.close()
+
+def cargarPedidos():
+    Aux=None
+    p=open("ArchivoPedidos.txt" ,"r")
+    for line in p:
+        if line == "":
+            break
+        Aux=line.split(" ")
+        PedidoAux=Pedido()
+        PedidoAux.setIdpedido(Aux[0])
+        fecha = Aux[1].split("-")
+        PedidoAux.setFechaC(date(int(fecha[0]), int(fecha[1]), int(fecha[2])))
+        fecha = Aux[2].split("-")
+        PedidoAux.setFechaE(date(int(fecha[0]), int(fecha[1]), int(fecha[2])))
+        PedidoAux.setEntrega(Aux[3])
+        for item in ListaPersonas:
+            if item.Dni == int(Aux[4]):
+                PedidoAux.setPersona(item)
+        for item in ListaPlatos:
+            if item.Nombre == Aux[5][:-1]:
+                PedidoAux.setPlato(item)
+        ListaPedidos.append(PedidoAux)
+    p.close()
 
 
 while(True):
 
-    print("1 - Agregar Alumno")
-    print("2 - Agregar Profesor")
-    print("3 - Agregar Plato")
-    print("4 - Agregar Pedido")
-    print("5 - Eliminar Alumno")
-    print("6 - Eliminar Profesor")
-    print("7 - Eliminar Plato")
-    print("8 - Eliminar Pedido")
+    print("1 - Agregar Alumno  2 - Agregar Profesor  3 - Agregar Plato  4 - Agregar Pedido")
+    print("5 - Eliminar Alumno  6 - Eliminar Profesor  7 - Eliminar Plato  8 - Eliminar Pedido")
     print("9 - Mostrar Listado de Platos")
-    print("10 - Modificar Alumno")
-    print("11 - Modificar Profesor")
-    print("12 - Modificar Plato")
-    print("13 - Modificar Pedido")
+    print("10 - Modificar Alumno  11 - Modificar Profesor  12 - Modificar Plato  13 - Modificar Pedido")
+    print("14 - Guardar Alumnos  15 - Guardar Profesores  16 - Guardar Platos  17 - Guardar Pedidos")
+    print("18 - Cargar Alumnos  19 - Cargar Profesores  20 - Cargar Platos  21 - Cargar Pedidos")
+
 
     a=input()
     if int(a) == 1:
@@ -249,6 +335,23 @@ while(True):
         modPlatillo()
     if int(a) == 13:
         modPedido()
+    if int(a) == 14:
+        textoAlumnos()
+    if int(a) == 15:
+        textoProfesor()
+    if int(a) == 16:
+        textoPlatos()
+    if int(a) == 17:
+        textoPedidos()
+    if int(a) == 18:
+        cargarAlumnos()
+    if int(a) == 19:
+        cargarProfesor()
+    if int(a) == 20:
+        cargarPlatos()
+    if int(a) == 21:
+        cargarPedidos()
+
 
 
 
